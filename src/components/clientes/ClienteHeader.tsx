@@ -29,7 +29,7 @@ export function ClienteHeader({ totalClientes, onNovoCliente }: ClienteHeaderPro
         <Button 
           onClick={onNovoCliente} 
           size="lg"
-          className="gap-3 h-12 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-200 rounded-xl font-semibold"
+          className="gap-3 h-12 px-6 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 shadow-md hover:shadow-lg transition-all duration-200 rounded-xl font-semibold text-white"
         >
           <UserPlus className="h-5 w-5" />
           Novo Cliente
