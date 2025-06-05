@@ -48,32 +48,32 @@ export function ClienteFiltros({ filtros, onFiltrosChange, vendedores }: Cliente
       {/* Filtros em linha */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         <Select
-          value={filtros.tipo_venda || ''}
+          value={filtros.tipo_venda || 'all'}
           onValueChange={(value) => 
-            onFiltrosChange({ ...filtros, tipo_venda: value as any || undefined })
+            onFiltrosChange({ ...filtros, tipo_venda: value === 'all' ? undefined : value as any })
           }
         >
           <SelectTrigger>
             <SelectValue placeholder="Tipo de Venda" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Todos os tipos</SelectItem>
+            <SelectItem value="all">Todos os tipos</SelectItem>
             <SelectItem value="NORMAL">Normal</SelectItem>
             <SelectItem value="FUTURA">Futura</SelectItem>
           </SelectContent>
         </Select>
 
         <Select
-          value={filtros.vendedor_id || ''}
+          value={filtros.vendedor_id || 'all'}
           onValueChange={(value) => 
-            onFiltrosChange({ ...filtros, vendedor_id: value || undefined })
+            onFiltrosChange({ ...filtros, vendedor_id: value === 'all' ? undefined : value })
           }
         >
           <SelectTrigger>
             <SelectValue placeholder="Vendedor" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Todos vendedores</SelectItem>
+            <SelectItem value="all">Todos vendedores</SelectItem>
             {vendedores.map(vendedor => (
               <SelectItem key={vendedor.id} value={vendedor.id}>
                 {vendedor.nome}
@@ -83,16 +83,16 @@ export function ClienteFiltros({ filtros, onFiltrosChange, vendedores }: Cliente
         </Select>
 
         <Select
-          value={filtros.procedencia || ''}
+          value={filtros.procedencia || 'all'}
           onValueChange={(value) => 
-            onFiltrosChange({ ...filtros, procedencia: value || undefined })
+            onFiltrosChange({ ...filtros, procedencia: value === 'all' ? undefined : value })
           }
         >
           <SelectTrigger>
             <SelectValue placeholder="Procedência" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Todas procedências</SelectItem>
+            <SelectItem value="all">Todas procedências</SelectItem>
             {PROCEDENCIAS.map(proc => (
               <SelectItem key={proc} value={proc}>
                 {proc}
