@@ -74,7 +74,7 @@ export function ClienteModal({
       <DialogContent className="max-w-4xl h-[85vh] flex flex-col bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800">
         <DialogHeader className="border-b bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm p-6 rounded-t-lg">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-gradient-to-br from-slate-600 to-slate-700 rounded-xl shadow-lg">
+            <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl shadow-lg">
               {cliente ? (
                 <User className="h-6 w-6 text-white" />
               ) : (
@@ -89,7 +89,7 @@ export function ClienteModal({
                 {cliente ? 'Atualize as informações do cliente' : 'Preencha os dados para cadastrar um novo cliente'}
               </p>
             </div>
-            <Badge variant="outline" className="px-3 py-1 font-medium border-slate-300 text-slate-600 dark:border-slate-600 dark:text-slate-400">
+            <Badge variant="outline" className="px-3 py-1 font-medium">
               {Math.round(progressoPercentual)}% completo
             </Badge>
           </div>
@@ -100,7 +100,7 @@ export function ClienteModal({
               <span className="text-muted-foreground font-medium">
                 Progresso do formulário
               </span>
-              <span className="font-semibold text-slate-600 dark:text-slate-400">
+              <span className="font-semibold text-blue-600 dark:text-blue-400">
                 {abasPreenchidas} de 3 seções preenchidas
               </span>
             </div>
@@ -125,7 +125,7 @@ export function ClienteModal({
                         <TabsTrigger 
                           key={tab.id}
                           value={tab.id} 
-                          className="flex flex-col gap-2 h-16 px-4 data-[state=active]:bg-gradient-to-r data-[state=active]:from-slate-600 data-[state=active]:to-slate-700 data-[state=active]:text-white data-[state=active]:shadow-md"
+                          className="flex flex-col gap-2 h-16 px-4 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-600 data-[state=active]:text-white data-[state=active]:shadow-md"
                         >
                           <div className="flex items-center gap-2">
                             <Icon className="h-4 w-4" />
@@ -181,7 +181,7 @@ export function ClienteModal({
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="px-8 py-2 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white rounded-lg text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-8 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isLoading ? (
                         <div className="flex items-center gap-2">
