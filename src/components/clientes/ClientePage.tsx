@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { ClienteHeader } from './ClienteHeader';
-import { ClienteFiltros } from './ClienteFiltros';
+import { ClienteFiltrosModerno } from './ClienteFiltrosModerno';
 import { ClienteTabela } from './ClienteTabela';
 import { ClienteModal } from './ClienteModal';
 import { useClientes } from '@/hooks/useClientes';
@@ -48,36 +48,40 @@ export function ClientePage() {
   };
 
   return (
-    <div className="flex-1 space-y-6 p-6">
-      <ClienteHeader 
-        totalClientes={totalClientes}
-        onNovoCliente={handleNovoCliente}
-      />
-      
-      <ClienteFiltros 
-        filtros={filtros}
-        onFiltrosChange={setFiltros}
-        vendedores={vendedores}
-      />
-      
-      <ClienteTabela 
-        clientes={clientes}
-        isLoading={isLoading}
-        onEditarCliente={handleEditarCliente}
-        onRemoverCliente={removerCliente}
-      />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      <div className="container mx-auto p-6 space-y-8">
+        <ClienteHeader 
+          totalClientes={totalClientes}
+          onNovoCliente={handleNovoCliente}
+        />
+        
+        <ClienteFiltrosModerno 
+          filtros={filtros}
+          onFiltrosChange={setFiltros}
+          vendedores={vendedores}
+        />
+        
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+          <ClienteTabela 
+            clientes={clientes}
+            isLoading={isLoading}
+            onEditarCliente={handleEditarCliente}
+            onRemoverCliente={removerCliente}
+          />
+        </div>
 
-      <ClienteModal
-        aberto={modalAberto}
-        onFechar={() => {
-          setModalAberto(false);
-          setClienteEditando(null);
-        }}
-        cliente={clienteEditando}
-        vendedores={vendedores}
-        onSalvar={handleSalvarCliente}
-        isLoading={isLoading}
-      />
+        <ClienteModal
+          aberto={modalAberto}
+          onFechar={() => {
+            setModalAberto(false);
+            setClienteEditando(null);
+          }}
+          cliente={clienteEditando}
+          vendedores={vendedores}
+          onSalvar={handleSalvarCliente}
+          isLoading={isLoading}
+        />
+      </div>
     </div>
   );
 }
