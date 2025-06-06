@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Ambiente, AmbienteFormData } from '@/types/ambiente';
 
-export const useAmbientes = () => {
+export const useAmbientes = (clienteId?: string) => {
   const [ambientes, setAmbientes] = useState<Ambiente[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -14,7 +14,8 @@ export const useAmbientes = () => {
         ...acabamento,
         id: Date.now().toString() + Math.random()
       })),
-      valorTotal: data.acabamentos.reduce((total, acabamento) => total + acabamento.valor, 0)
+      valorTotal: data.valorTotal,
+      clienteId: clienteId
     };
 
     setAmbientes(prev => [...prev, novoAmbiente]);
@@ -59,7 +60,8 @@ export const useAmbientes = () => {
               valor: 3858
             }
           ],
-          valorTotal: 9358
+          valorTotal: 9358,
+          clienteId: clienteId
         },
         {
           id: 'xml-2',
@@ -82,7 +84,8 @@ export const useAmbientes = () => {
               valor: 2800
             }
           ],
-          valorTotal: 7000
+          valorTotal: 7000,
+          clienteId: clienteId
         }
       ];
 

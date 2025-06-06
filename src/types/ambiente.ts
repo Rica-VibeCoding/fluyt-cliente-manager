@@ -19,4 +19,5 @@ export interface Ambiente {
 export interface AmbienteFormData {
   nome: string;
   acabamentos: Omit<Acabamento, 'id'>[];
+  valorTotal: number;
 }

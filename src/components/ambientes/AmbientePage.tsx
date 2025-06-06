@@ -1,14 +1,20 @@
 
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Download, Plus, Home, Upload } from 'lucide-react';
+import { Download, Plus, Home, Upload, ArrowLeft } from 'lucide-react';
 import { useAmbientes } from '@/hooks/useAmbientes';
 import { AmbienteModal } from './AmbienteModal';
 import { AmbienteCard } from './AmbienteCard';
+import { Link } from 'react-router-dom';
 
 export function AmbientePage() {
-  const { ambientes, adicionarAmbiente, removerAmbiente, importarXML, isLoading, valorTotalGeral } = useAmbientes();
+  const [searchParams] = useSearchParams();
+  const clienteId = searchParams.get('clienteId');
+  const clienteNome = searchParams.get('clienteNome');
+  
+  const { ambientes, adicionarAmbiente, removerAmbiente, importarXML, isLoading, valorTotalGeral } = useAmbientes(clienteId || undefined);
   const [modalAberto, setModalAberto] = useState(false);
 
   return (
@@ -16,15 +22,27 @@ export function AmbientePage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="space-y-2">
-          <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 dark:from-slate-100 dark:to-slate-400 bg-clip-text text-transparent flex items-center gap-4">
-            <div className="p-3 bg-gradient-to-br from-slate-600 to-slate-700 rounded-2xl shadow-sm">
-              <Home className="h-8 w-8 text-white" />
+          <div className="flex items-center gap-4">
+            <Link to="/" className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+              <ArrowLeft className="h-5 w-5" />
+            </Link>
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 dark:from-slate-100 dark:to-slate-400 bg-clip-text text-transparent flex items-center gap-4">
+                <div className="p-3 bg-gradient-to-br from-slate-600 to-slate-700 rounded-2xl shadow-sm">
+                  <Home className="h-8 w-8 text-white" />
+                </div>
+                Ambientes do Orçamento
+              </h1>
+              {clienteNome && (
+                <p className="text-lg text-muted-foreground font-medium">
+                  Cliente: <span className="font-semibold">{clienteNome}</span>
+                </p>
+              )}
+              <p className="text-lg text-muted-foreground font-medium">
+                Gerencie os ambientes e acabamentos do orçamento
+              </p>
             </div>
-            Ambientes do Orçamento
-          </h1>
-          <p className="text-lg text-muted-foreground font-medium">
-            Gerencie os ambientes e acabamentos do orçamento
-          </p>
+          </div>
         </div>
 
         <div className="flex gap-3">

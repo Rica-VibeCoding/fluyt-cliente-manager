@@ -18,6 +18,7 @@ interface AmbienteModalProps {
 export function AmbienteModal({ open, onOpenChange, onSubmit }: AmbienteModalProps) {
   const [nome, setNome] = useState('');
   const [acabamentos, setAcabamentos] = useState<Omit<Acabamento, 'id'>[]>([]);
+  const [valorTotal, setValorTotal] = useState(0);
 
   const adicionarAcabamento = () => {
     setAcabamentos(prev => [...prev, {
@@ -40,15 +41,14 @@ export function AmbienteModal({ open, onOpenChange, onSubmit }: AmbienteModalPro
   };
 
   const handleSubmit = () => {
-    if (nome && acabamentos.length > 0) {
-      onSubmit({ nome, acabamentos });
+    if (nome && acabamentos.length > 0 && valorTotal > 0) {
+      onSubmit({ nome, acabamentos, valorTotal });
       setNome('');
       setAcabamentos([]);
+      setValorTotal(0);
       onOpenChange(false);
     }
   };
-
-  const valorTotal = acabamentos.reduce((total, acabamento) => total + acabamento.valor, 0);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -138,16 +138,6 @@ export function AmbienteModal({ open, onOpenChange, onSubmit }: AmbienteModalPro
                       />
                     </div>
                   </div>
-
-                  <div>
-                    <Label>Valor (R$)</Label>
-                    <Input
-                      type="number"
-                      value={acabamento.valor}
-                      onChange={(e) => atualizarAcabamento(index, 'valor', parseFloat(e.target.value) || 0)}
-                      placeholder="0,00"
-                    />
-                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -157,6 +147,17 @@ export function AmbienteModal({ open, onOpenChange, onSubmit }: AmbienteModalPro
                 Nenhum acabamento adicionado. Clique em "Inserir Acabamento" para começar.
               </div>
             )}
+          </div>
+
+          <div>
+            <Label htmlFor="valorTotal">Valor Total do Ambiente (R$)</Label>
+            <Input
+              id="valorTotal"
+              type="number"
+              value={valorTotal}
+              onChange={(e) => setValorTotal(parseFloat(e.target.value) || 0)}
+              placeholder="0,00"
+            />
           </div>
 
           {valorTotal > 0 && (
@@ -172,7 +173,7 @@ export function AmbienteModal({ open, onOpenChange, onSubmit }: AmbienteModalPro
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancelar
           </Button>
-          <Button onClick={handleSubmit} disabled={!nome || acabamentos.length === 0}>
+          <Button onClick={handleSubmit} disabled={!nome || acabamentos.length === 0 || valorTotal === 0}>
             Criar Ambiente
           </Button>
         </DialogFooter>
