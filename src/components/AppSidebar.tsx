@@ -2,153 +2,166 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
   SidebarGroup,
+  SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarHeader,
   SidebarFooter,
-} from "@/components/ui/sidebar";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Users, Home, DollarSign, FileText, Settings, Bell } from "lucide-react";
+} from "@/components/ui/sidebar"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Users, Home, BarChart3, Settings, User } from "lucide-react"
+import { Link, useLocation } from "react-router-dom"
+
+const menuItems = [
+  {
+    title: "Clientes",
+    url: "/",
+    icon: Users,
+    badge: "12",
+  },
+  {
+    title: "Ambientes",
+    url: "/ambientes",
+    icon: Home,
+    badge: "3",
+  },
+  {
+    title: "Relatórios",
+    url: "/relatorios",
+    icon: BarChart3,
+  },
+  {
+    title: "Configurações",
+    url: "/configuracoes",
+    icon: Settings,
+  },
+]
 
 export function AppSidebar() {
+  const location = useLocation()
+
   return (
-    <Sidebar className="border-r bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-800">
-      <SidebarHeader className="border-b bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm">
-        <div className="flex items-center gap-3 px-6 py-4">
-          <div className="relative">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-lg">F</span>
-            </div>
-            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-slate-800"></div>
+    <Sidebar className="border-r-0 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+      <SidebarHeader className="p-6">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 bg-gradient-to-br from-slate-600 to-slate-700 rounded-xl flex items-center justify-center shadow-sm">
+            <span className="text-white font-bold text-lg">M</span>
           </div>
-          <div className="flex flex-col">
-            <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              FLUYT
-            </span>
-            <span className="text-xs text-muted-foreground">Sistema de Gestão</span>
+          <div>
+            <h2 className="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-slate-100 dark:to-slate-400 bg-clip-text text-transparent">
+              MóvelCRM
+            </h2>
+            <p className="text-xs text-muted-foreground font-medium">Sistema de Gestão</p>
           </div>
         </div>
       </SidebarHeader>
-      
-      <SidebarContent className="px-3 py-4">
+
+      <SidebarContent className="px-4">
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 py-2 flex items-center gap-2">
-            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-            Comercial
+          <SidebarGroupLabel className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
+            Menu Principal
           </SidebarGroupLabel>
-          <SidebarMenu className="space-y-1">
-            <SidebarMenuItem>
-              <SidebarMenuButton 
-                isActive 
-                className="w-full justify-start gap-3 h-11 px-4 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-200/50 dark:border-blue-500/20 text-blue-700 dark:text-blue-300 font-medium shadow-sm hover:shadow-md transition-all duration-200"
-              >
-                <div className="p-1.5 bg-blue-500/20 rounded-lg">
-                  <Users className="h-4 w-4" />
-                </div>
-                <div className="flex flex-col items-start">
-                  <span>Clientes</span>
-                  <span className="text-xs text-blue-600/70">Gestão completa</span>
-                </div>
-                <Badge variant="secondary" className="ml-auto bg-blue-100 text-blue-700 text-xs">
-                  Active
-                </Badge>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            
-            <SidebarMenuItem>
-              <SidebarMenuButton className="w-full justify-start gap-3 h-11 px-4 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-200 group">
-                <div className="p-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors">
-                  <Home className="h-4 w-4" />
-                </div>
-                <div className="flex flex-col items-start">
-                  <span>Ambientes</span>
-                  <span className="text-xs text-slate-500">Em breve</span>
-                </div>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            
-            <SidebarMenuItem>
-              <SidebarMenuButton className="w-full justify-start gap-3 h-11 px-4 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-200 group">
-                <div className="p-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors">
-                  <DollarSign className="h-4 w-4" />
-                </div>
-                <div className="flex flex-col items-start">
-                  <span>Orçamentos</span>
-                  <span className="text-xs text-slate-500">Em breve</span>
-                </div>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            
-            <SidebarMenuItem>
-              <SidebarMenuButton className="w-full justify-start gap-3 h-11 px-4 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-200 group">
-                <div className="p-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors">
-                  <FileText className="h-4 w-4" />
-                </div>
-                <div className="flex flex-col items-start">
-                  <span>Contratos</span>
-                  <span className="text-xs text-slate-500">Em breve</span>
-                </div>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1">
+              {menuItems.map((item) => {
+                const isActive = location.pathname === item.url
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton 
+                      asChild 
+                      className={`
+                        group transition-all duration-200 rounded-xl h-12
+                        ${isActive 
+                          ? 'bg-gradient-to-r from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 shadow-sm border border-slate-300 dark:border-slate-600' 
+                          : 'hover:bg-slate-200/60 dark:hover:bg-slate-700/60'
+                        }
+                      `}
+                    >
+                      <Link to={item.url} className="flex items-center gap-3 px-3">
+                        <div className={`
+                          p-2 rounded-lg transition-colors
+                          ${isActive 
+                            ? 'bg-slate-600 text-white shadow-sm' 
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 group-hover:bg-slate-600 group-hover:text-white'
+                          }
+                        `}>
+                          <item.icon className="h-4 w-4" />
+                        </div>
+                        <div className="flex-1">
+                          <span className={`font-medium ${isActive ? 'text-slate-900 dark:text-slate-100' : 'text-slate-700 dark:text-slate-300'}`}>
+                            {item.title}
+                          </span>
+                        </div>
+                        {item.badge && (
+                          <Badge 
+                            variant="secondary" 
+                            className={`
+                              text-xs h-5 px-2
+                              ${isActive 
+                                ? 'bg-slate-600 text-white' 
+                                : 'bg-slate-300 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
+                              }
+                            `}
+                          >
+                            {item.badge}
+                          </Badge>
+                        )}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup className="mt-8">
-          <SidebarGroupLabel className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 py-2 flex items-center gap-2">
-            <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-            Sistema
-          </SidebarGroupLabel>
-          <SidebarMenu className="space-y-1">
-            <SidebarMenuItem>
-              <SidebarMenuButton className="w-full justify-start gap-3 h-11 px-4 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-200 group">
-                <div className="p-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors">
-                  <Bell className="h-4 w-4" />
+        <div className="mt-6 px-2">
+          <Card className="bg-gradient-to-br from-slate-600 to-slate-700 border-slate-300 dark:border-slate-600 text-white">
+            <CardContent className="p-4">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <span className="text-xs font-medium text-slate-200">Sistema Online</span>
                 </div>
-                <div className="flex flex-col items-start">
-                  <span>Notificações</span>
-                  <span className="text-xs text-slate-500">2 novas</span>
-                </div>
-                <Badge variant="destructive" className="ml-auto text-xs">2</Badge>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            
-            <SidebarMenuItem>
-              <SidebarMenuButton className="w-full justify-start gap-3 h-11 px-4 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-200 group">
-                <div className="p-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors">
-                  <Settings className="h-4 w-4" />
-                </div>
-                <div className="flex flex-col items-start">
-                  <span>Configurações</span>
-                  <span className="text-xs text-slate-500">Personalizar</span>
-                </div>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>
+                <p className="text-xs text-slate-300">
+                  Orçamentos: <span className="font-semibold text-white">15 ativos</span>
+                </p>
+                <p className="text-xs text-slate-300">
+                  Última sync: <span className="font-semibold text-white">há 2 min</span>
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </SidebarContent>
 
-      <SidebarFooter className="border-t bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm p-4">
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-700 dark:to-slate-600 border border-slate-200 dark:border-slate-600">
-          <Avatar className="h-8 w-8 border-2 border-white shadow-sm">
-            <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-500 text-white text-sm font-medium">
-              AD
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col flex-1 min-w-0">
-            <span className="font-medium text-sm text-slate-900 dark:text-slate-100 truncate">
-              Admin
-            </span>
-            <span className="text-xs text-slate-500 dark:text-slate-400 truncate">
-              admin@fluyt.com
-            </span>
-          </div>
-          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-        </div>
+      <SidebarFooter className="p-4">
+        <Card className="bg-slate-200 dark:bg-slate-800 border-slate-300 dark:border-slate-700">
+          <CardContent className="p-3">
+            <div className="flex items-center gap-3">
+              <Avatar className="h-8 w-8">
+                <AvatarFallback className="bg-slate-600 text-white text-sm font-semibold">
+                  JD
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">
+                  João Vendedor
+                </p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">
+                  Vendedor
+                </p>
+              </div>
+              <User className="h-4 w-4 text-slate-600 dark:text-slate-400" />
+            </div>
+          </CardContent>
+        </Card>
       </SidebarFooter>
     </Sidebar>
-  );
+  )
 }
