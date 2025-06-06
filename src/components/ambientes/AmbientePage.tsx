@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Download, Plus, Home, FileImport } from 'lucide-react';
+import { Download, Plus, Home, Upload } from 'lucide-react';
 import { useAmbientes } from '@/hooks/useAmbientes';
 import { AmbienteModal } from './AmbienteModal';
 import { AmbienteCard } from './AmbienteCard';
@@ -34,7 +34,7 @@ export function AmbientePage() {
             variant="outline"
             className="gap-2"
           >
-            <FileImport className="h-4 w-4" />
+            <Upload className="h-4 w-4" />
             {isLoading ? 'Importando...' : 'Importar XML'}
           </Button>
           
