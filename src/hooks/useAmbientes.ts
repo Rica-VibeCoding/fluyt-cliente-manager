@@ -10,10 +10,7 @@ export const useAmbientes = (clienteId?: string) => {
     const novoAmbiente: Ambiente = {
       id: Date.now().toString(),
       nome: data.nome,
-      acabamentos: data.acabamentos.map(acabamento => ({
-        ...acabamento,
-        id: Date.now().toString() + Math.random()
-      })),
+      acabamentos: data.acabamentos,
       valorTotal: data.valorTotal,
       clienteId: clienteId
     };
@@ -26,72 +23,45 @@ export const useAmbientes = (clienteId?: string) => {
   };
 
   const importarXML = async () => {
+    if (!clienteId) return;
+    
     setIsLoading(true);
     
-    // Simulação da importação XML
+    // Função provisória que cria um ambiente fictício
     setTimeout(() => {
-      const ambientesSimulados: Ambiente[] = [
-        {
-          id: 'xml-1',
-          nome: 'Cozinha',
-          acabamentos: [
-            {
-              id: '1',
-              tipo: 'Porta',
-              cor: 'Itapuã',
-              espessura: '15 mm',
-              material: 'MDP',
-              valor: 3000
-            },
-            {
-              id: '2',
-              tipo: 'Caixa',
-              cor: 'Branco TX',
-              espessura: '15 mm',
-              material: 'MDP',
-              valor: 2500
-            },
-            {
-              id: '3',
-              tipo: 'Painel',
-              cor: 'Avellano',
-              espessura: '18 mm',
-              material: 'MDF',
-              valor: 3858
-            }
-          ],
-          valorTotal: 9358,
-          clienteId: clienteId
-        },
-        {
-          id: 'xml-2',
-          nome: 'Dormitório',
-          acabamentos: [
-            {
-              id: '4',
-              tipo: 'Porta',
-              cor: 'Carvalho',
-              espessura: '18 mm',
-              material: 'MDF',
-              valor: 4200
-            },
-            {
-              id: '5',
-              tipo: 'Caixa',
-              cor: 'Branco TX',
-              espessura: '15 mm',
-              material: 'MDP',
-              valor: 2800
-            }
-          ],
-          valorTotal: 7000,
-          clienteId: clienteId
-        }
-      ];
+      const ambienteFicticio: Ambiente = {
+        id: 'xml-' + Date.now(),
+        nome: 'Ambiente Importado (Fictício)',
+        acabamentos: [
+          {
+            tipo: 'Porta',
+            cor: 'Madeira Natural',
+            espessura: '18mm',
+            material: 'MDF'
+          },
+          {
+            tipo: 'Caixa',
+            cor: 'Branco Texturizado',
+            espessura: '15mm',
+            material: 'MDP'
+          },
+          {
+            tipo: 'Painel',
+            cor: 'Carvalho Europeu',
+            espessura: '18mm',
+            material: 'MDF'
+          }
+        ],
+        valorTotal: 5500,
+        clienteId: clienteId
+      };
 
-      setAmbientes(prev => [...prev, ...ambientesSimulados]);
+      setAmbientes(prev => [...prev, ambienteFicticio]);
       setIsLoading(false);
-    }, 2000);
+      
+      // Log para demonstrar que a função foi executada
+      console.log('Ambiente fictício criado:', ambienteFicticio);
+    }, 1500); // Simula carregamento de 1.5 segundos
   };
 
   const valorTotalGeral = ambientes.reduce((total, ambiente) => total + ambiente.valorTotal, 0);

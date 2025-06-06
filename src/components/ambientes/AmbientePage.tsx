@@ -21,7 +21,7 @@ export function AmbientePage() {
     <div className="p-6 space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex items-center gap-4">
             <Link to="/" className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
               <ArrowLeft className="h-5 w-5" />
@@ -33,23 +33,27 @@ export function AmbientePage() {
                 </div>
                 Ambientes do Orçamento
               </h1>
-              {clienteNome ? (
-                <div className="flex items-center gap-2 mt-2">
-                  <User className="h-5 w-5 text-muted-foreground" />
-                  <p className="text-lg text-muted-foreground font-medium">
-                    Cliente: <span className="font-semibold text-foreground">{decodeURIComponent(clienteNome)}</span>
-                  </p>
-                </div>
-              ) : (
-                <p className="text-lg text-muted-foreground font-medium">
-                  Selecione um cliente para gerenciar os ambientes
-                </p>
-              )}
-              <p className="text-base text-muted-foreground">
-                Gerencie os ambientes e acabamentos do orçamento
-              </p>
             </div>
           </div>
+          
+          {/* Cliente destacado */}
+          {clienteNome && (
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 shadow-sm">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-600 rounded-lg">
+                  <User className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                    Cliente Selecionado
+                  </p>
+                  <p className="text-xl font-bold text-blue-900 dark:text-blue-100">
+                    {decodeURIComponent(clienteNome)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="flex gap-3">
