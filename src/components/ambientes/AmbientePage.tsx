@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Download, Plus, Home, Upload, ArrowLeft } from 'lucide-react';
+import { Download, Plus, Home, Upload, ArrowLeft, User } from 'lucide-react';
 import { useAmbientes } from '@/hooks/useAmbientes';
 import { AmbienteModal } from './AmbienteModal';
 import { AmbienteCard } from './AmbienteCard';
@@ -33,12 +33,19 @@ export function AmbientePage() {
                 </div>
                 Ambientes do Orçamento
               </h1>
-              {clienteNome && (
+              {clienteNome ? (
+                <div className="flex items-center gap-2 mt-2">
+                  <User className="h-5 w-5 text-muted-foreground" />
+                  <p className="text-lg text-muted-foreground font-medium">
+                    Cliente: <span className="font-semibold text-foreground">{decodeURIComponent(clienteNome)}</span>
+                  </p>
+                </div>
+              ) : (
                 <p className="text-lg text-muted-foreground font-medium">
-                  Cliente: <span className="font-semibold">{clienteNome}</span>
+                  Selecione um cliente para gerenciar os ambientes
                 </p>
               )}
-              <p className="text-lg text-muted-foreground font-medium">
+              <p className="text-base text-muted-foreground">
                 Gerencie os ambientes e acabamentos do orçamento
               </p>
             </div>
@@ -48,7 +55,7 @@ export function AmbientePage() {
         <div className="flex gap-3">
           <Button
             onClick={importarXML}
-            disabled={isLoading}
+            disabled={isLoading || !clienteId}
             variant="outline"
             className="gap-2"
           >
@@ -56,12 +63,35 @@ export function AmbientePage() {
             {isLoading ? 'Importando...' : 'Importar XML'}
           </Button>
           
-          <Button onClick={() => setModalAberto(true)} className="gap-2">
+          <Button 
+            onClick={() => setModalAberto(true)} 
+            className="gap-2"
+            disabled={!clienteId}
+          >
             <Plus className="h-4 w-4" />
             Novo Ambiente
           </Button>
         </div>
       </div>
+
+      {/* Aviso se não há cliente selecionado */}
+      {!clienteId && (
+        <Card className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-900/20">
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3">
+              <User className="h-5 w-5 text-amber-600" />
+              <div>
+                <p className="font-medium text-amber-800 dark:text-amber-200">
+                  Nenhum cliente selecionado
+                </p>
+                <p className="text-sm text-amber-700 dark:text-amber-300">
+                  Para criar ambientes, acesse a lista de clientes e clique em "Criar Ambientes" no menu de ações.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Resumo */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -90,7 +120,12 @@ export function AmbientePage() {
             <CardTitle className="text-sm text-muted-foreground">Ações</CardTitle>
           </CardHeader>
           <CardContent>
-            <Button variant="outline" size="sm" className="w-full">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="w-full"
+              disabled={ambientes.length === 0}
+            >
               <Download className="h-4 w-4 mr-2" />
               Exportar PDF
             </Button>
@@ -99,29 +134,31 @@ export function AmbientePage() {
       </div>
 
       {/* Lista de Ambientes */}
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Ambientes Cadastrados</h2>
-        
-        {ambientes.length === 0 ? (
-          <Card className="p-8">
-            <div className="text-center text-muted-foreground">
-              <Home className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p className="text-lg font-medium mb-2">Nenhum ambiente cadastrado</p>
-              <p>Comece importando um XML ou criando um ambiente manualmente</p>
+      {clienteId && (
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold">Ambientes Cadastrados</h2>
+          
+          {ambientes.length === 0 ? (
+            <Card className="p-8">
+              <div className="text-center text-muted-foreground">
+                <Home className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <p className="text-lg font-medium mb-2">Nenhum ambiente cadastrado</p>
+                <p>Comece importando um XML ou criando um ambiente manualmente</p>
+              </div>
+            </Card>
+          ) : (
+            <div className="grid gap-4">
+              {ambientes.map((ambiente) => (
+                <AmbienteCard
+                  key={ambiente.id}
+                  ambiente={ambiente}
+                  onRemover={removerAmbiente}
+                />
+              ))}
             </div>
-          </Card>
-        ) : (
-          <div className="grid gap-4">
-            {ambientes.map((ambiente) => (
-              <AmbienteCard
-                key={ambiente.id}
-                ambiente={ambiente}
-                onRemover={removerAmbiente}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
 
       {/* Modal */}
       <AmbienteModal
