@@ -2,6 +2,19 @@
 import { useState } from 'react';
 import { Ambiente, AmbienteFormData } from '@/types/ambiente';
 
+const nomesFicticios = [
+  'Cozinha',
+  'Dormitório',
+  'Sala de Estar',
+  'Banheiro',
+  'Escritório',
+  'Lavanderia',
+  'Quarto Master',
+  'Closet',
+  'Sala de Jantar',
+  'Varanda'
+];
+
 export const useAmbientes = (clienteId?: string) => {
   const [ambientes, setAmbientes] = useState<Ambiente[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,9 +46,11 @@ export const useAmbientes = (clienteId?: string) => {
     
     // Função provisória que cria um ambiente fictício
     setTimeout(() => {
+      const nomeAleatorio = nomesFicticios[Math.floor(Math.random() * nomesFicticios.length)];
+      
       const ambienteFicticio: Ambiente = {
         id: 'xml-' + Date.now(),
-        nome: 'Ambiente Importado (Fictício)',
+        nome: nomeAleatorio,
         acabamentos: [
           {
             id: 'acabamento-1',
@@ -43,7 +58,7 @@ export const useAmbientes = (clienteId?: string) => {
             cor: 'Madeira Natural',
             espessura: '18mm',
             material: 'MDF',
-            valor: 0
+            valor: 850
           },
           {
             id: 'acabamento-2',
@@ -51,7 +66,7 @@ export const useAmbientes = (clienteId?: string) => {
             cor: 'Branco Texturizado',
             espessura: '15mm',
             material: 'MDP',
-            valor: 0
+            valor: 1200
           },
           {
             id: 'acabamento-3',
@@ -59,19 +74,18 @@ export const useAmbientes = (clienteId?: string) => {
             cor: 'Carvalho Europeu',
             espessura: '18mm',
             material: 'MDF',
-            valor: 0
+            valor: 950
           }
         ],
-        valorTotal: 5500,
+        valorTotal: 3000 + Math.floor(Math.random() * 2000), // Valor entre 3000 e 5000
         clienteId: clienteId
       };
 
       setAmbientes(prev => [...prev, ambienteFicticio]);
       setIsLoading(false);
       
-      // Log para demonstrar que a função foi executada
       console.log('Ambiente fictício criado:', ambienteFicticio);
-    }, 1500); // Simula carregamento de 1.5 segundos
+    }, 1500);
   };
 
   const valorTotalGeral = ambientes.reduce((total, ambiente) => total + ambiente.valorTotal, 0);

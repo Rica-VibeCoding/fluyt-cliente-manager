@@ -97,22 +97,22 @@ export function AmbientePage() {
         </Card>
       )}
 
-      {/* Resumo */}
+      {/* Resumo compacto */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-          <CardHeader className="pb-3">
+          <CardHeader className="pb-2">
             <CardTitle className="text-sm text-muted-foreground">Total de Ambientes</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">
             <div className="text-2xl font-bold">{ambientes.length}</div>
           </CardContent>
         </Card>
 
         <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20">
-          <CardHeader className="pb-3">
+          <CardHeader className="pb-2">
             <CardTitle className="text-sm text-muted-foreground">Valor Total Geral</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">
             <div className="text-2xl font-bold text-green-600">
               {valorTotalGeral.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
             </div>
@@ -120,14 +120,14 @@ export function AmbientePage() {
         </Card>
 
         <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20">
-          <CardHeader className="pb-3">
+          <CardHeader className="pb-2">
             <CardTitle className="text-sm text-muted-foreground">Ações</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">
             <Button 
               variant="outline" 
               size="sm" 
-              className="w-full"
+              className="w-full h-8"
               disabled={ambientes.length === 0}
             >
               <Download className="h-4 w-4 mr-2" />
@@ -140,7 +140,12 @@ export function AmbientePage() {
       {/* Lista de Ambientes */}
       {clienteId && (
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Ambientes Cadastrados</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold">Ambientes Cadastrados</h2>
+            <span className="text-sm text-muted-foreground">
+              Clique para expandir e ver detalhes dos acabamentos
+            </span>
+          </div>
           
           {ambientes.length === 0 ? (
             <Card className="p-8">
@@ -151,7 +156,7 @@ export function AmbientePage() {
               </div>
             </Card>
           ) : (
-            <div className="grid gap-4">
+            <div className="space-y-2">
               {ambientes.map((ambiente) => (
                 <AmbienteCard
                   key={ambiente.id}

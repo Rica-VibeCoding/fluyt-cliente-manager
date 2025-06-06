@@ -1,10 +1,22 @@
 
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ChevronDown, ChevronUp, Trash2 } from 'lucide-react';
 import { Ambiente } from '@/types/ambiente';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 
 interface AmbienteCardProps {
   ambiente: Ambiente;
@@ -14,89 +26,81 @@ interface AmbienteCardProps {
 export function AmbienteCard({ ambiente, onRemover }: AmbienteCardProps) {
   const [expandido, setExpandido] = useState(false);
 
-  const resumoAcabamentos = ambiente.acabamentos.slice(0, 2).map(a => a.tipo).join(', ');
-  const temMaisAcabamentos = ambiente.acabamentos.length > 2;
-
   return (
-    <Card className="transition-all duration-200 hover:shadow-md">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-lg">{ambiente.nome}</CardTitle>
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-green-600">
-              {ambiente.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-            </span>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => onRemover(ambiente.id)}
-              className="text-red-500 hover:text-red-700"
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </CardHeader>
-
-      <CardContent>
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">
-                {resumoAcabamentos}
-                {temMaisAcabamentos && ` +${ambiente.acabamentos.length - 2} mais`}
-              </span>
-              <Badge variant="secondary">
+    <Collapsible open={expandido} onOpenChange={setExpandido}>
+      <div className="border rounded-lg bg-card">
+        <CollapsibleTrigger asChild>
+          <div className="flex items-center justify-between p-4 hover:bg-muted/50 cursor-pointer transition-colors">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                {expandido ? (
+                  <ChevronUp className="h-4 w-4 text-muted-foreground" />
+                ) : (
+                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                )}
+                <span className="font-medium">{ambiente.nome}</span>
+              </div>
+              <Badge variant="secondary" className="text-xs">
                 {ambiente.acabamentos.length} acabamento{ambiente.acabamentos.length !== 1 ? 's' : ''}
               </Badge>
             </div>
             
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setExpandido(!expandido)}
-            >
-              {expandido ? (
-                <>
-                  <ChevronUp className="h-4 w-4 mr-1" />
-                  Recolher
-                </>
-              ) : (
-                <>
-                  <ChevronDown className="h-4 w-4 mr-1" />
-                  Ver Detalhes
-                </>
-              )}
-            </Button>
-          </div>
-
-          {expandido && (
-            <div className="mt-4 space-y-3 border-t pt-3">
-              {ambiente.acabamentos.map((acabamento) => (
-                <div key={acabamento.id} className="bg-muted/30 p-3 rounded-md">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium">{acabamento.tipo}</h4>
-                    <span className="font-semibold text-green-600">
-                      {acabamento.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2 text-sm text-muted-foreground">
-                    <div>
-                      <span className="font-medium">Cor:</span> {acabamento.cor}
-                    </div>
-                    <div>
-                      <span className="font-medium">Espessura:</span> {acabamento.espessura}
-                    </div>
-                    <div>
-                      <span className="font-medium">Material:</span> {acabamento.material}
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="flex items-center gap-4">
+              <span className="font-semibold text-green-600">
+                {ambiente.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+              </span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemover(ambiente.id);
+                }}
+                className="text-red-500 hover:text-red-700 h-8 w-8 p-0"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
             </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+          </div>
+        </CollapsibleTrigger>
+
+        <CollapsibleContent>
+          <div className="border-t bg-muted/20">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-b-0">
+                  <TableHead className="h-10 text-xs">Tipo</TableHead>
+                  <TableHead className="h-10 text-xs">Cor</TableHead>
+                  <TableHead className="h-10 text-xs">Material</TableHead>
+                  <TableHead className="h-10 text-xs">Espessura</TableHead>
+                  <TableHead className="h-10 text-xs text-right">Valor</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {ambiente.acabamentos.map((acabamento) => (
+                  <TableRow key={acabamento.id} className="border-b-0">
+                    <TableCell className="py-2 text-sm font-medium">
+                      {acabamento.tipo}
+                    </TableCell>
+                    <TableCell className="py-2 text-sm text-muted-foreground">
+                      {acabamento.cor}
+                    </TableCell>
+                    <TableCell className="py-2 text-sm text-muted-foreground">
+                      {acabamento.material}
+                    </TableCell>
+                    <TableCell className="py-2 text-sm text-muted-foreground">
+                      {acabamento.espessura}
+                    </TableCell>
+                    <TableCell className="py-2 text-sm text-right text-green-600 font-medium">
+                      {acabamento.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </CollapsibleContent>
+      </div>
+    </Collapsible>
   );
 }
