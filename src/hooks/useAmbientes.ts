@@ -10,7 +10,11 @@ export const useAmbientes = (clienteId?: string) => {
     const novoAmbiente: Ambiente = {
       id: Date.now().toString(),
       nome: data.nome,
-      acabamentos: data.acabamentos,
+      acabamentos: data.acabamentos.map((acabamento, index) => ({
+        ...acabamento,
+        id: `${Date.now()}-${index}`,
+        valor: 0 // Valor padrão pois agora o valor é único por ambiente
+      })),
       valorTotal: data.valorTotal,
       clienteId: clienteId
     };
@@ -34,22 +38,28 @@ export const useAmbientes = (clienteId?: string) => {
         nome: 'Ambiente Importado (Fictício)',
         acabamentos: [
           {
+            id: 'acabamento-1',
             tipo: 'Porta',
             cor: 'Madeira Natural',
             espessura: '18mm',
-            material: 'MDF'
+            material: 'MDF',
+            valor: 0
           },
           {
+            id: 'acabamento-2',
             tipo: 'Caixa',
             cor: 'Branco Texturizado',
             espessura: '15mm',
-            material: 'MDP'
+            material: 'MDP',
+            valor: 0
           },
           {
+            id: 'acabamento-3',
             tipo: 'Painel',
             cor: 'Carvalho Europeu',
             espessura: '18mm',
-            material: 'MDF'
+            material: 'MDF',
+            valor: 0
           }
         ],
         valorTotal: 5500,
