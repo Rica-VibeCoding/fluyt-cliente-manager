@@ -144,7 +144,7 @@ export function AmbientePage() {
 
       {/* Lista de Ambientes */}
       {clienteId && (
-        <div className="space-y-3">
+        <div className="space-y-2">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">Ambientes Cadastrados</h2>
             <span className="text-xs text-muted-foreground">
@@ -161,7 +161,7 @@ export function AmbientePage() {
               </div>
             </Card>
           ) : (
-            <div className="bg-background border border-border/60 rounded-md overflow-hidden">
+            <div className="bg-background border border-border/40 rounded-lg overflow-hidden shadow-sm">
               {ambientes.map((ambiente) => (
                 <AmbienteCard 
                   key={ambiente.id} 
