@@ -1,17 +1,16 @@
-
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Plus, TrendingUp, Users, UserPlus } from 'lucide-react';
-
 interface ClienteHeaderProps {
   totalClientes: number;
   onNovoCliente: () => void;
 }
-
-export function ClienteHeader({ totalClientes, onNovoCliente }: ClienteHeaderProps) {
-  return (
-    <div className="space-y-4">
+export function ClienteHeader({
+  totalClientes,
+  onNovoCliente
+}: ClienteHeaderProps) {
+  return <div className="space-y-4">
       {/* Header principal */}
       <div className="flex items-center justify-between">
         <div className="space-y-2">
@@ -21,16 +20,10 @@ export function ClienteHeader({ totalClientes, onNovoCliente }: ClienteHeaderPro
             </div>
             Gestão de Clientes
           </h1>
-          <p className="text-lg text-muted-foreground font-medium">
-            Centralize e gerencie todos os seus clientes de forma eficiente
-          </p>
+          
         </div>
         
-        <Button 
-          onClick={onNovoCliente} 
-          size="lg"
-          className="gap-3 h-12 px-6 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 shadow-md hover:shadow-lg transition-all duration-200 rounded-xl font-semibold text-white"
-        >
+        <Button onClick={onNovoCliente} size="lg" className="gap-3 h-12 px-6 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 shadow-md hover:shadow-lg transition-all duration-200 rounded-xl font-semibold text-white">
           <UserPlus className="h-5 w-5" />
           Novo Cliente
         </Button>
@@ -102,6 +95,5 @@ export function ClienteHeader({ totalClientes, onNovoCliente }: ClienteHeaderPro
           </div>
         </Card>
       </div>
-    </div>
-  );
+    </div>;
 }
